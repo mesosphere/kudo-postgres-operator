@@ -5,6 +5,7 @@ metadata:
 spec:
   serviceName: "{{ $.Name }}-keeper"
   replicas: {{ $.Params.KEEPER_NODES }}
+  podManagementPolicy: Parallel
   selector:
     matchLabels:
       component: stolon-keeper
@@ -14,6 +15,9 @@ spec:
       labels:
         component: stolon-keeper
         stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+        {{ if eq .Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
+        kudo.dev/servicemonitor: "true"
+        {{ end }}
       annotations:
         pod.alpha.kubernetes.io/initialized: "true"
         prometheus.io/scrape: "true"
@@ -59,8 +63,10 @@ spec:
               value: "stolon"
             - name: STKEEPER_PG_SU_PASSWORDFILE
               value: "/etc/secrets/stolon/password"
+            {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
             - name: STKEEPER_METRICS_LISTEN_ADDRESS
               value: "0.0.0.0:8080"
+            {{ end }}
             {{ if eq $.Params.KEEPER_DEBUG "true" }}
             - name: STKEEPER_DEBUG
               value: "true"
@@ -74,7 +80,9 @@ spec:
               cpu: "{{ $.Params.KEEPER_CPU_LIMIT_MC }}m" 
           ports:
             - containerPort: 5432
+            {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
             - containerPort: 8080
+            {{ end }}
           volumeMounts:
             - mountPath: /stolon-data
               name: data

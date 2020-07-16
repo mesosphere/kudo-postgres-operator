@@ -42,8 +42,10 @@ spec:
               value: "configmap"
             - name: STPROXY_LISTEN_ADDRESS
               value: "0.0.0.0"
+            {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
             - name: STPROXY_METRICS_LISTEN_ADDRESS
               value: "0.0.0.0:8080"
+            {{ end }}
             {{ if eq $.Params.PROXY_DEBUG "true" }}
             - name: STPROXY_DEBUG
               value: "true"
@@ -57,7 +59,9 @@ spec:
               cpu: "{{ $.Params.PROXY_CPU_LIMIT_MC }}m"
           ports:
             - containerPort: 5432
+            {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
             - containerPort: 8080
+            {{ end }}
           readinessProbe:
             tcpSocket:
               port: 5432

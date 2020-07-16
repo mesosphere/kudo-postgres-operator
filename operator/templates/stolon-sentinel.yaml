@@ -40,8 +40,10 @@ spec:
               value: "kubernetes"
             - name: STSENTINEL_KUBE_RESOURCE_KIND
               value: "configmap"
+            {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
             - name: STSENTINEL_METRICS_LISTEN_ADDRESS
               value: "0.0.0.0:8080"
+            {{ end }}
             {{ if eq $.Params.SENTINEL_DEBUG "true" }}
             - name: STSENTINEL_DEBUG
               value: "true"
@@ -53,5 +55,7 @@ spec:
             limits:
               memory: "{{ $.Params.SENTINEL_MEM_LIMIT_MIB }}Mi"
               cpu: "{{ $.Params.SENTINEL_CPU_LIMIT_MC }}m"
+          {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
           ports:
             - containerPort: 8080
+          {{ end }}

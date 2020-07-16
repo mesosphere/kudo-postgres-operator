@@ -4,8 +4,8 @@ kubernetesVersion: "1.16.0"
 kudoVersion: "0.15.0"
 appVersion: "12.3"
 maintainers:
-- email: qwer@asdf
-  name: asdf
+- email: aneumann@d2iq.com
+  name: Andreas Neumann
 name: postgres
 
 tasks:
@@ -34,6 +34,12 @@ tasks:
       parameter: EXTERNAL_SERVICE
       resources:
         - stolon-proxy-service-extern.yaml
+  - name: monitor-deploy
+    kind: Toggle
+    spec:
+      parameter: PROMETHEUS_EXPORTER_ENABLED
+      resources:
+        - service-monitor.yaml
 plans:
   deploy:
     strategy: serial
@@ -45,5 +51,8 @@ plans:
         tasks:
         - prereq
         - ext-service
+        - monitor-deploy
         - node
+      - name: init
+        tasks:
         - init
