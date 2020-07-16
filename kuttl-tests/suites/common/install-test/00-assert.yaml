@@ -1,0 +1,33 @@
+apiVersion: kudo.dev/v1beta1
+kind: Instance
+metadata:
+  name: postgres
+  namespace: postgres-install-test
+status:
+  planStatus:
+    deploy:
+      status: COMPLETE
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-keeper
+  namespace: postgres-install-test
+status:
+  readyReplicas: 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-proxy
+  namespace: postgres-install-test
+status:
+  readyReplicas: 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-sentinel
+  namespace: postgres-install-test
+status:
+  readyReplicas: 2

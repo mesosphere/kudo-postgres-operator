@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ $.Name }}-keeper
 spec:
-  serviceName: "{{ $.Name }}-stolon-keeper"
+  serviceName: "{{ $.Name }}-keeper"
   replicas: {{ $.Params.KEEPER_NODES }}
   selector:
     matchLabels:

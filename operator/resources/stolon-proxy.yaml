@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ $.Name }}-proxy
 spec:
-  replicas: 2
+  replicas: {{ $.Params.PROXY_NODES }}
   selector:
     matchLabels:
       component: stolon-proxy

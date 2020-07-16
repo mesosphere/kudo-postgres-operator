@@ -1,0 +1,14 @@
+apiVersion: kudo.dev/v1alpha1
+kind: TestSuite
+manifestDirs:
+  - ./manifests/
+commands:
+  - command: ./bin/kubectl-kudo init --unsafe-self-signed-webhook-ca --wait
+  - command: ./bin/kubectl create ns postgres-install-test
+  - command: ./bin/kubectl-kudo install -n postgres-install-test --skip-instance ../operator/
+testDirs:
+  - ./suites/common
+startKIND: true
+kindConfig: ./suites/common/kind-config.yaml
+timeout: 300
+parallel: 3
