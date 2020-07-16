@@ -1,12 +1,99 @@
 apiVersion: kudo.dev/v1beta1
 parameters:
+
   - name: KEEPER_NODES
     description: Number of Stolon Keeper nodes
     default: 2
   - name: PROXY_NODES
     description: Number of Stolon Proxy nodes
     default: 2
+  - name: SENTINEL_NODES
+    default: 2
 
   - name: CLUSTER_NAME
     description: The name of this Postgres Stolon Cluster
     default: kube-stolon
+
+  - name: STOLON_DOCKER_IMAGE
+    description: TODO
+    default: "sorintlab/stolon:master-pg10"
+
+  - name: STOLON_DOCKER_IMAGE_PULL_POLICY
+    description: TODO
+    default: Always
+
+  ################################################################################
+  ############################### Keeper settings ################################
+  ################################################################################
+
+  - name: KEEPER_CPU_MC
+    description: "CPU request (in millicores) for the Stolon Keeper containers."
+    default: "1000"
+
+  - name: KEEPER_CPU_LIMIT_MC
+    description: "CPU limit (in millicores) for the Stolon Keeper containers."
+    default: "1000"
+
+  - name: KEEPER_MEM_MIB
+    description: "Memory request (in MiB) for the Stolon Keeper containers."
+    default: "4096"
+
+  - name: KEEPER_MEM_LIMIT_MIB
+    description: "Memory limit (in MiB) for the Stolon Keeper containers."
+    default: "4096"
+
+  - name: KEEPER_DISK_SIZE_GIB
+    description: "Disk size (in GiB) for the Stolon Keeper containers."
+    default: "1"
+
+  - name: KEEPER_DEBUG
+    description: TODO
+    default: true
+
+  ################################################################################
+  ############################### Proxy settings #################################
+  ################################################################################
+
+  - name: PROXY_CPU_MC
+    description: "CPU request (in millicores) for the Stolon Proxy containers."
+    default: "1000"
+
+  - name: PROXY_CPU_LIMIT_MC
+    description: "CPU limit (in millicores) for the Stolon Proxy containers."
+    default: "1000"
+
+  - name: PROXY_MEM_MIB
+    description: "Memory request (in MiB) for the Stolon Proxy containers."
+    default: "4096"
+
+  - name: PROXY_MEM_LIMIT_MIB
+    description: "Memory limit (in MiB) for the Stolon Proxy containers."
+    default: "4096"
+
+  - name: PROXY_DEBUG
+    description: TODO
+    default: true
+
+  ################################################################################
+  ############################### Sentinel settings ##############################
+  ################################################################################
+
+  - name: SENTINEL_CPU_MC
+    description: "CPU request (in millicores) for the Stolon Sentinel containers."
+    default: "1000"
+
+  - name: SENTINEL_CPU_LIMIT_MC
+    description: "CPU limit (in millicores) for the Stolon Sentinel containers."
+    default: "1000"
+
+  - name: SENTINEL_MEM_MIB
+    description: "Memory request (in MiB) for the Stolon Sentinel containers."
+    default: "4096"
+
+  - name: SENTINEL_MEM_LIMIT_MIB
+    description: "Memory limit (in MiB) for the Stolon Sentinel containers."
+    default: "4096"
+
+  - name: SENTINEL_DEBUG
+    description: TODO
+    default: true

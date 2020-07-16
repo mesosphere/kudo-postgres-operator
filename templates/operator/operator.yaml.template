@@ -9,13 +9,15 @@ maintainers:
 name: postgres
 
 tasks:
-- kind: Apply
-  name: deploy
-  spec:
-    - stolon-keeper.yaml
-    - stolon-proxy.yaml
-    - stolon-proxy-service.yaml
-    - stolon-sentinel.yaml
+  - name: deploy
+    kind: Apply
+    spec:
+      resources:
+        - rbac.yaml
+        - stolon-keeper.yaml
+        - stolon-proxy.yaml
+        - stolon-proxy-service.yaml
+        - stolon-sentinel.yaml
 
 plans:
   deploy:

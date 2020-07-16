@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ $.Name }}-keeper
 spec:
+  serviceAccountName: "{{ $.Name }}-sa"
   serviceName: "{{ $.Name }}-keeper"
   replicas: {{ $.Params.KEEPER_NODES }}
   selector:
@@ -94,4 +95,4 @@ spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            storage: 512Mi
+            storage: {{ $.Params.KEEPER_DISK_SIZE_GIB }}Gi
