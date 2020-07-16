@@ -79,11 +79,12 @@ export STOLON_DOCKER_IMAGE="sorintlab/stolon:master-pg10"
 ################################# Testing ######################################
 ################################################################################
 
-#export INTEGRATION_TESTS_DOCKER_IMAGE_FROM="golang:1.13.1-stretch"
-#export INTEGRATION_TESTS_DOCKER_IMAGE_NAMESPACE="mesosphere"
-#export INTEGRATION_TESTS_DOCKER_IMAGE_NAME="kudo-cassandra-tests"
-#export INTEGRATION_TESTS_DOCKER_IMAGE_TAG="latest${IMAGE_DISAMBIGUATION_SUFFIX:-}"
-#export INTEGRATION_TESTS_DOCKER_IMAGE="${INTEGRATION_TESTS_DOCKER_IMAGE_NAMESPACE}/${INTEGRATION_TESTS_DOCKER_IMAGE_NAME}:${INTEGRATION_TESTS_DOCKER_IMAGE_TAG}"
+# TODO: Add Image that has psql installed
+export INTEGRATION_TESTS_DOCKER_IMAGE_FROM="golang:1.13.1-stretch"
+export INTEGRATION_TESTS_DOCKER_IMAGE_NAMESPACE="mesosphere"
+export INTEGRATION_TESTS_DOCKER_IMAGE_NAME="kudo-postgres-tests"
+export INTEGRATION_TESTS_DOCKER_IMAGE_TAG="latest${IMAGE_DISAMBIGUATION_SUFFIX:-}"
+export INTEGRATION_TESTS_DOCKER_IMAGE="${INTEGRATION_TESTS_DOCKER_IMAGE_NAMESPACE}/${INTEGRATION_TESTS_DOCKER_IMAGE_NAME}:${INTEGRATION_TESTS_DOCKER_IMAGE_TAG}"
 
 ################################################################################
 ############################# Data Services ####################################

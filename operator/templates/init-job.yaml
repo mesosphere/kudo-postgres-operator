@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $.Name }}-init
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      serviceAccountName: {{ $.Name }}-sa
+      containers:
+          - name: init
+            image: {{ $.Params.STOLON_DOCKER_IMAGE }}
+            imagePullPolicy: {{ $.Params.STOLON_DOCKER_IMAGE_PULL_POLICY }}
+            command:
+              - bash
+              - -c
+            args:
+              - stolonctl --cluster-name={{ $.Params.CLUSTER_NAME }} --store-backend=kubernetes --kube-resource-kind=configmap init --yes
+      restartPolicy: Never

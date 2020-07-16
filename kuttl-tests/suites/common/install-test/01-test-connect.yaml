@@ -1,0 +1,4 @@
+apiVersion: kudo.dev/v1beta1
+kind: TestStep
+commands:
+  - script: PGPASSWORD=password1 psql --host localhost --port 5432 postgres -U stolon << pg-script.sql

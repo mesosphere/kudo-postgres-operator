@@ -22,6 +22,14 @@ parameters:
     description: TODO
     default: Always
 
+  - name: EXTERNAL_SERVICE
+    description: TODO
+    default: false
+
+  - name: EXTERNAL_NODE_PORT
+    description: TODO
+    default: 30001
+
   ################################################################################
   ############################### Keeper settings ################################
   ################################################################################
@@ -44,7 +52,7 @@ parameters:
 
   - name: KEEPER_DISK_SIZE_GIB
     description: "Disk size (in GiB) for the Stolon Keeper containers."
-    default: "1"
+    default: "20"
 
   - name: KEEPER_DEBUG
     description: TODO

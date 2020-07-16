@@ -9,24 +9,41 @@ maintainers:
 name: postgres
 
 tasks:
-  - name: deploy
+  - name: prereq
     kind: Apply
     spec:
       resources:
         - rbac.yaml
+        - secret.yaml
+  - name: node
+    kind: Apply
+    spec:
+      resources:
         - stolon-keeper.yaml
         - stolon-proxy.yaml
         - stolon-proxy-service.yaml
         - stolon-sentinel.yaml
-
+  - name: init
+    kind: Apply
+    spec:
+      resources:
+        - init-job.yaml
+  - name: ext-service
+    kind: Toggle
+    spec:
+      parameter: EXTERNAL_SERVICE
+      resources:
+        - stolon-proxy-service-extern.yaml
 plans:
   deploy:
+    strategy: serial
     phases:
     - name: deploy
+      strategy: serial
       steps:
       - name: deploy
         tasks:
-        - deploy
-      strategy: serial
-    strategy: serial
-
+        - prereq
+        - ext-service
+        - node
+        - init

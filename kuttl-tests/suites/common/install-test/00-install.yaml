@@ -2,5 +2,5 @@ apiVersion: kudo.dev/v1beta1
 kind: TestStep
 commands:
   - command: cat params.yaml
-  - command: kubectl kudo install -n cassandra-postgres-test --instance postgres -P params.yaml ../../../../operator/
+  - command: kubectl kudo install -n postgres-install-test --instance postgres -P params.yaml ../../../../operator/
     namespaced: true
