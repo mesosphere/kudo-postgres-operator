@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $.Name }}-monitoring
+  name: {{ $.Name }}-stolon-monitoring
   labels:
     kudo.dev/servicemonitor: "true"
 spec:
@@ -10,6 +10,21 @@ spec:
       name: prometheus-exporter-port
       targetPort: 8080
   selector:
+    stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Name }}-pg-monitoring
+  labels:
+    kudo.dev/servicemonitor: "true"
+spec:
+  ports:
+    - port: {{ .Params.PROMETHEUS_EXPORTER_PORT }}
+      name: prometheus-exporter-port
+      targetPort: 9187
+  selector:
+    component: stolon-keeper
     stolon-cluster: {{ $.Params.CLUSTER_NAME }}
 ---
 apiVersion: monitoring.coreos.com/v1

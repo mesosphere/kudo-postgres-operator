@@ -88,6 +88,23 @@ spec:
               name: data
             - mountPath: /etc/secrets/stolon
               name: stolon
+        {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
+        - name: prometheus-exporter
+          image: {{ $.Params.PROMETHEUS_EXPORTER_DOCKER_IMAGE }}
+          imagePullPolicy: {{ $.Params.PROMETHEUS_EXPORTER_DOCKER_IMAGE_PULL_POLICY }}
+          resources:
+            requests:
+              memory: "{{ $.Params.PROMETHEUS_EXPORTER_MEM_MIB }}Mi"
+              cpu: "{{ $.Params.PROMETHEUS_EXPORTER_CPU_MC }}m"
+            limits:
+              memory: "{{ $.Params.PROMETHEUS_EXPORTER_MEM_LIMIT_MIB }}Mi"
+              cpu: "{{ $.Params.PROMETHEUS_EXPORTER_CPU_LIMIT_MC }}m"
+          env:
+            - name: DATA_SOURCE_NAME
+              value: "postgresql://stolon:password1@{{ $.Name }}-keeper-0:5432/postgres?sslmode=disable"
+          ports:
+            - containerPort: 9187
+        {{ end }}
       volumes:
         - name: stolon
           secret:

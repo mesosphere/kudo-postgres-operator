@@ -30,14 +30,6 @@ parameters:
     description: TODO
     default: 30001
 
-  - name: PROMETHEUS_EXPORTER_ENABLED
-    description: "A toggle to enable the prometheus metrics exporter."
-    default: "false"
-
-  - name: PROMETHEUS_EXPORTER_PORT
-    description: "Prometheus exporter port."
-    default: "7200"
-
   ################################################################################
   ############################### Keeper settings ################################
   ################################################################################
@@ -113,3 +105,40 @@ parameters:
   - name: SENTINEL_DEBUG
     description: TODO
     default: true
+
+
+  ################################################################################
+  ######################### Prometheus exporter settings #########################
+  ################################################################################
+
+  - name: PROMETHEUS_EXPORTER_ENABLED
+    description: "A toggle to enable the prometheus metrics exporter."
+    default: "false"
+
+  - name: PROMETHEUS_EXPORTER_PORT
+    description: "Prometheus exporter port."
+    default: "7200"
+
+  - name: PROMETHEUS_EXPORTER_CPU_MC
+    description: "CPU request (in millicores) for the Prometheus exporter containers."
+    default: "100"
+
+  - name: PROMETHEUS_EXPORTER_CPU_LIMIT_MC
+    description: "CPU limit (in millicores) for the Prometheus exporter containers."
+    default: "250"
+
+  - name: PROMETHEUS_EXPORTER_MEM_MIB
+    description: "Memory request (in MiB) for the Prometheus exporter containers."
+    default: "50"
+
+  - name: PROMETHEUS_EXPORTER_MEM_LIMIT_MIB
+    description: "Memory limit (in MiB) for the Prometheus exporter containers."
+    default: "100"
+
+  - name: PROMETHEUS_EXPORTER_DOCKER_IMAGE
+    description: "Prometheus exporter Docker image."
+    default: "${PROMETHEUS_EXPORTER_DOCKER_IMAGE}"
+
+  - name: PROMETHEUS_EXPORTER_DOCKER_IMAGE_PULL_POLICY
+    description: "Prometheus exporter Docker image pull policy."
+    default: "Always"
