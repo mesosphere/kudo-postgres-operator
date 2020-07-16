@@ -100,6 +100,12 @@ spec:
               memory: "{{ $.Params.PROMETHEUS_EXPORTER_MEM_LIMIT_MIB }}Mi"
               cpu: "{{ $.Params.PROMETHEUS_EXPORTER_CPU_LIMIT_MC }}m"
           env:
+            - name: DATA_SOURCE_NAME_URI
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: PGUSER
+              value: "stolon"
             - name: DATA_SOURCE_NAME
               value: "postgresql://stolon:password1@{{ $.Name }}-keeper-0:5432/postgres?sslmode=disable"
           ports:
