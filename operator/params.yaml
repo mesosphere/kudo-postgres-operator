@@ -1,0 +1,13 @@
+apiVersion: kudo.dev/v1beta1
+parameters:
+  - name: KEEPER_NODES
+    description: Number of Stolon Keeper nodes
+    default: 2
+  - name: PROXY_NODES
+    description: Number of Stolon Proxy nodes
+    default: 2
+
+  - name: CLUSTER_NAME
+    description: The name of this Postgres Stolon Cluster
+    default: kube-stolon
+
