@@ -1,0 +1,30 @@
+apiVersion: kudo.dev/v1beta1
+operatorVersion: "${OPERATOR_VERSION}"
+kubernetesVersion: "${KUBERNETES_VERSION}"
+kudoVersion: "${KUDO_VERSION}"
+appVersion: "${POSTGRES_VERSION}"
+maintainers:
+- email: qwer@asdf
+  name: asdf
+name: postgres
+
+tasks:
+- kind: Apply
+  name: deploy
+  spec:
+    - stolon-keeper.yaml
+    - stolon-proxy.yaml
+    - stolon-proxy-service.yaml
+    - stolon-sentinel.yaml
+
+plans:
+  deploy:
+    phases:
+    - name: deploy
+      steps:
+      - name: deploy
+        tasks:
+        - deploy
+      strategy: serial
+    strategy: serial
+

@@ -20,4 +20,4 @@ tasks:
 - kind: Apply
   name: deploy
   spec:
-    -
+    - "${POSTGRES_VERSION}"

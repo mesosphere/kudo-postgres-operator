@@ -1,10 +1,7 @@
-# PetSet was renamed to StatefulSet in k8s 1.5
-# apiVersion: apps/v1alpha1
-# kind: PetSet
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ $.Name }}-stolon-keeper
+  name: {{ $.Name }}-keeper
 spec:
   serviceName: "{{ $.Name }}-stolon-keeper"
   replicas: {{ $.Params.KEEPER_NODES }}
@@ -25,7 +22,8 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: stolon-keeper
-          image: sorintlab/stolon:master-pg10
+          image: {{ $.Params.STOLON_DOCKER_IMAGE }}
+          imagePullPolicy: {{ $.Params.STOLON_DOCKER_IMAGE_PULL_POLICY }}
           command:
             - "/bin/bash"
             - "-ec"
@@ -62,11 +60,17 @@ spec:
               value: "/etc/secrets/stolon/password"
             - name: STKEEPER_METRICS_LISTEN_ADDRESS
               value: "0.0.0.0:8080"
-            # Uncomment this to enable debug logs
             {{ if eq $.Params.KEEPER_DEBUG "true" }}
             - name: STKEEPER_DEBUG
               value: "true"
             {{ end }}
+          resources:
+            requests:
+              memory: "{{ $.Params.KEEPER_MEM_MIB }}Mi"
+              cpu: "{{ $.Params.KEEPER_CPU_MC }}m"
+            limits:
+              memory: "{{ $.Params.KEEPER_MEM_LIMIT_MIB }}Mi"
+              cpu: "{{ $.Params.KEEPER_CPU_LIMIT_MC }}m" 
           ports:
             - containerPort: 5432
             - containerPort: 8080

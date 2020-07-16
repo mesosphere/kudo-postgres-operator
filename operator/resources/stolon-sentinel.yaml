@@ -1,25 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stolon-sentinel
+  name: {{ $.Name }}-sentinel
 spec:
-  replicas: 2
+  replicas: {{ $.Params.SENTINEL_NODES }}
   selector:
     matchLabels:
       component: stolon-sentinel
-      stolon-cluster: kube-stolon
+      stolon-cluster: {{ $.Params.CLUSTER_NAME }}
   template:
     metadata:
       labels:
         component: stolon-sentinel
-        stolon-cluster: kube-stolon
+        stolon-cluster: {{ $.Params.CLUSTER_NAME }}
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
     spec:
       containers:
         - name: stolon-sentinel
-          image: sorintlab/stolon:master-pg10
+          image: {{ $.Params.STOLON_DOCKER_IMAGE }}
+          imagePullPolicy: {{ $.Params.STOLON_DOCKER_IMAGE_PULL_POLICY }}
           command:
             - "/bin/bash"
             - "-ec"
@@ -40,8 +41,16 @@ spec:
               value: "configmap"
             - name: STSENTINEL_METRICS_LISTEN_ADDRESS
               value: "0.0.0.0:8080"
-            ## Uncomment this to enable debug logs
-            #- name: STSENTINEL_DEBUG
-            #  value: "true"
+            {{ if eq $.Params.SENTINEL_DEBUG "true" }}
+            - name: STSENTINEL_DEBUG
+              value: "true"
+            {{ end }}
+          resources:
+            requests:
+              memory: "{{ $.Params.SENTINEL_MEM_MIB }}Mi"
+              cpu: "{{ $.Params.SENTINEL_CPU_MC }}m"
+            limits:
+              memory: "{{ $.Params.SENTINEL_MEM_LIMIT_MIB }}Mi"
+              cpu: "{{ $.Params.SENTINEL_CPU_LIMIT_MC }}m"
           ports:
             - containerPort: 8080
