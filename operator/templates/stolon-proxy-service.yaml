@@ -4,7 +4,7 @@ metadata:
   name: {{ $.Name }}-proxy-svc
 spec:
   ports:
-    - port: 5432
+    - port: {{ $.Params.SQL_PORT }}
       targetPort: 5432
   selector:
     component: stolon-proxy

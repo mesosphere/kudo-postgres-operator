@@ -33,6 +33,7 @@ parameters:
   - name: CREDENTIALS_SECRET_NAME
     description: "The credentials secret that contains usernames and passwords for a superuser and a replication user"
     required: true
+    default: "set-me"
 
   ################################################################################
   ############################### Keeper settings ################################

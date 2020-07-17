@@ -57,14 +57,14 @@ spec:
             - name: STKEEPER_PG_REPL_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: credentials
+                  name: {{ $.Params.CREDENTIALS_SECRET_NAME }}
                   key: repluser-name
             - name: STKEEPER_PG_REPL_PASSWORDFILE
               value: "/etc/secrets/credentials/repluser-password"
             - name: STKEEPER_PG_SU_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: credentials
+                  name: {{ $.Params.CREDENTIALS_SECRET_NAME }}
                   key: superuser-name
             - name: STKEEPER_PG_SU_PASSWORDFILE
               value: "/etc/secrets/credentials/superuser-password"
@@ -112,12 +112,12 @@ spec:
             - name: DATA_SOURCE_USER
               valueFrom:
                 secretKeyRef:
-                  name: credentials
+                  name: {{ $.Params.CREDENTIALS_SECRET_NAME }}
                   key: superuser-name
             - name: DATA_SOURCE_PASS
               valueFrom:
                 secretKeyRef:
-                  name: credentials
+                  name: {{ $.Params.CREDENTIALS_SECRET_NAME }}
                   key: superuser-password
             - name: PGDATABASE
               value: "postgres"

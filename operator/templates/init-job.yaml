@@ -15,6 +15,6 @@ spec:
               - bash
               - -c
             args:
-              - stolonctl --cluster-name={{ $.Params.CLUSTER_NAME }} --store-backend=kubernetes --kube-resource-kind=configmap init --yes
-              - while :; do pg_isready --host postgres-proxy-svc --port 5432 && break; echo "Waiting for service to be ready..."; sleep 3; done;
+              - stolonctl --cluster-name={{ $.Params.CLUSTER_NAME }} --store-backend=kubernetes --kube-resource-kind=configmap init --yes;
+                while :; do echo "Waiting for service to be ready..."; sleep 3; pg_isready --host postgres-proxy-svc --port {{ $.Params.SQL_PORT }} && break; done;
       restartPolicy: Never

@@ -30,9 +30,14 @@ parameters:
     description: TODO
     default: 30001
 
+  - name: SQL_PORT
+    description: TODO
+    default: 5432
+
   - name: CREDENTIALS_SECRET_NAME
     description: "The credentials secret that contains usernames and passwords for a superuser and a replication user"
     required: true
+    default: "set-me"
 
   ################################################################################
   ############################### Keeper settings ################################

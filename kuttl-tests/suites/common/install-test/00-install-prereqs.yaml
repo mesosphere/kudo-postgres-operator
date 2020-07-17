@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: stolon-credentials
+type: Opaque
+stringData:
+  superuser-name: stolon
+  superuser-password: password1
+  repluser-name: stolon-repl
+  repluser-password: stolon-repl
