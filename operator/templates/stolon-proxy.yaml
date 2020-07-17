@@ -64,6 +64,6 @@ spec:
             {{ end }}
           readinessProbe:
             tcpSocket:
-              port: {{ $.Params.SQL_PORT }}
+              port: 5432
             initialDelaySeconds: 10
             timeoutSeconds: 5

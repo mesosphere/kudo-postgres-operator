@@ -40,6 +40,18 @@ parameters:
     default: "set-me"
 
   ################################################################################
+  ############################### Postgres settings ##############################
+  ################################################################################
+
+  - name: POSTGRES_ADDITIONAL_SETTINGS
+    description: "Custom postgres settings that are not exposed otherwise"
+    type: array
+
+  - name: PG_SYNCHRONOUS_REPLICATION
+    description: TODO
+    default: false
+
+  ################################################################################
   ############################### Keeper settings ################################
   ################################################################################
 
@@ -66,6 +78,18 @@ parameters:
   - name: KEEPER_DEBUG
     description: TODO
     default: true
+
+  - name: STOLON_SLEEP_INTERVAL
+    default: 5s
+
+  - name: STOLON_FAIL_INTERVAL
+    default: 20s
+
+  - name: STOLON_PROXY_CHECK_INTERVAL
+    default: 5s
+
+  - name: STOLON_PROXY_TIMEOUT
+    default: 15s
 
   ################################################################################
   ############################### Proxy settings #################################

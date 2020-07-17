@@ -14,11 +14,11 @@ tasks:
     spec:
       resources:
         - rbac.yaml
-        - secret.yaml
   - name: node
     kind: Apply
     spec:
       resources:
+        - stolon-cluster-spec.yaml
         - stolon-keeper.yaml
         - stolon-proxy.yaml
         - stolon-proxy-service.yaml

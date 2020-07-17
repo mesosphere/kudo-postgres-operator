@@ -7,14 +7,22 @@ spec:
   template:
     spec:
       serviceAccountName: {{ $.Name }}-sa
-      containers:
-          - name: init
-            image: {{ $.Params.STOLON_DOCKER_IMAGE }}
-            imagePullPolicy: {{ $.Params.STOLON_DOCKER_IMAGE_PULL_POLICY }}
-            command:
-              - bash
-              - -c
-            args:
-              - stolonctl --cluster-name={{ $.Params.CLUSTER_NAME }} --store-backend=kubernetes --kube-resource-kind=configmap init --yes;
-                while :; do echo "Waiting for service to be ready..."; sleep 3; pg_isready --host postgres-proxy-svc --port {{ $.Params.SQL_PORT }} && break; done;
       restartPolicy: Never
+      containers:
+        - name: init
+          image: {{ $.Params.STOLON_DOCKER_IMAGE }}
+          imagePullPolicy: {{ $.Params.STOLON_DOCKER_IMAGE_PULL_POLICY }}
+          command:
+            - bash
+            - -c
+          args:
+            - stolonctl --cluster-name={{ $.Params.CLUSTER_NAME }} --store-backend=kubernetes --kube-resource-kind=configmap init --yes -f /cluster-spec/cluster-spec.json;
+              while :; do echo "Waiting for service to be ready..."; sleep 3; pg_isready --host postgres-proxy-svc --port {{ $.Params.SQL_PORT }} && break; done;
+          volumeMounts:
+            - mountPath: /cluster-spec
+              name: cluster-spec
+      volumes:
+        - name: cluster-spec
+          configMap:
+            name: {{ $.Name }}-stolon-spec
+            defaultMode: 0755
