@@ -15,7 +15,7 @@ spec:
         stolon-cluster: {{ $.Params.CLUSTER_NAME }}
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
+        prometheus.io/port: "{{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}"
     spec:
       serviceAccountName: "{{ $.Name }}-sa"
       containers:
@@ -42,7 +42,7 @@ spec:
               value: "configmap"
             {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
             - name: STSENTINEL_METRICS_LISTEN_ADDRESS
-              value: "0.0.0.0:8080"
+              value: "0.0.0.0:{{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}"
             {{ end }}
             {{ if eq $.Params.SENTINEL_DEBUG "true" }}
             - name: STSENTINEL_DEBUG
@@ -57,5 +57,5 @@ spec:
               cpu: "{{ $.Params.SENTINEL_CPU_LIMIT_MC }}m"
           {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
           ports:
-            - containerPort: 8080
+            - containerPort: {{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}
           {{ end }}

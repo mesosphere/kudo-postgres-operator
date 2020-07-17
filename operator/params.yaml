@@ -30,6 +30,10 @@ parameters:
     description: TODO
     default: 30001
 
+  - name: CREDENTIALS_SECRET_NAME
+    description: "The credentials secret that contains usernames and passwords for a superuser and a replication user"
+    required: true
+
   ################################################################################
   ############################### Keeper settings ################################
   ################################################################################
@@ -106,7 +110,6 @@ parameters:
     description: TODO
     default: true
 
-
   ################################################################################
   ######################### Prometheus exporter settings #########################
   ################################################################################
@@ -142,3 +145,15 @@ parameters:
   - name: PROMETHEUS_EXPORTER_DOCKER_IMAGE_PULL_POLICY
     description: "Prometheus exporter Docker image pull policy."
     default: "Always"
+
+  ################################################################################
+  ######################### Internal settings ####################################
+  ################################################################################
+
+  - name: INTERNAL_PG_EXPORTER_PORT
+    description: "Internal container port for prometheus exporter"
+    default: "9187"
+
+  - name: INTERNAL_STOLON_METRICS_EXPORTER_PORT
+    description: "Internal container port for stolon metrics export"
+    default: "8080"

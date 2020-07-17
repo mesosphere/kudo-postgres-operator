@@ -8,7 +8,7 @@ spec:
   ports:
     - port: {{ .Params.PROMETHEUS_EXPORTER_PORT }}
       name: prometheus-exporter-port
-      targetPort: 8080
+      targetPort: {{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}
   selector:
     stolon-cluster: {{ $.Params.CLUSTER_NAME }}
 ---
@@ -22,7 +22,7 @@ spec:
   ports:
     - port: {{ .Params.PROMETHEUS_EXPORTER_PORT }}
       name: prometheus-exporter-port
-      targetPort: 9187
+      targetPort: {{ $.Params.INTERNAL_PG_EXPORTER_PORT }}
   selector:
     component: stolon-keeper
     stolon-cluster: {{ $.Params.CLUSTER_NAME }}

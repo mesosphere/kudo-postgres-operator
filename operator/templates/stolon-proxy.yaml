@@ -15,7 +15,7 @@ spec:
         stolon-cluster: {{ $.Params.CLUSTER_NAME }}
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
+        prometheus.io/port: "{{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}"
     spec:
       serviceAccountName: "{{ $.Name }}-sa"
       containers:
@@ -44,7 +44,7 @@ spec:
               value: "0.0.0.0"
             {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
             - name: STPROXY_METRICS_LISTEN_ADDRESS
-              value: "0.0.0.0:8080"
+              value: "0.0.0.0:{{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}"
             {{ end }}
             {{ if eq $.Params.PROXY_DEBUG "true" }}
             - name: STPROXY_DEBUG
@@ -60,7 +60,7 @@ spec:
           ports:
             - containerPort: 5432
             {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
-            - containerPort: 8080
+            - containerPort: {{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}
             {{ end }}
           readinessProbe:
             tcpSocket:
