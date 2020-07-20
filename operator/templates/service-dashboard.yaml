@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ $.Name }}-grafana-dashboard
-  labels:
-    grafana_dashboard: "1"
-data:
-  k8s-dashboard.json: |-
-  TODO

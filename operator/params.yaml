@@ -22,10 +22,6 @@ parameters:
     description: TODO
     default: false
 
-  - name: EXTERNAL_NODE_PORT
-    description: TODO
-    default: 30001
-
   - name: SQL_PORT
     description: TODO
     default: 5432

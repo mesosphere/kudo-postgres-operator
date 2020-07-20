@@ -14,6 +14,7 @@ tasks:
     spec:
       resources:
         - rbac.yaml
+        - stolon-cluster-config.yaml
   - name: node
     kind: Apply
     spec:
