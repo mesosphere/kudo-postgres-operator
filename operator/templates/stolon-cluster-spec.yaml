@@ -15,13 +15,13 @@ data:
       "proxyCheckInterval": "{{ $.Params.STOLON_PROXY_CHECK_INTERVAL }}",
       "failInterval": "{{ $.Params.STOLON_FAIL_INTERVAL }}",
       "sleepInterval":  "{{ $.Params.STOLON_SLEEP_INTERVAL }}",
+      "pgParameters": {
       {{- if .Params.POSTGRES_ADDITIONAL_SETTINGS }}
       {{ $max := len $.Params.POSTGRES_ADDITIONAL_SETTINGS }}
       {{ $max = sub $max 1 }}
-      "pgParameters": {
       {{ range $i, $setting := $.Params.POSTGRES_ADDITIONAL_SETTINGS -}}
          "{{ $setting.key }}": "{{ $setting.val }}"{{ if not (eq $i $max) }},{{end}}
       {{ end }}
-      }
       {{ end }}
+      }
     }

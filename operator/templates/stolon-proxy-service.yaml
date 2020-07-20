@@ -8,4 +8,4 @@ spec:
       targetPort: 5432
   selector:
     component: stolon-proxy
-    stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+    stolon-cluster: {{ $.Name }}

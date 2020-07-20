@@ -7,12 +7,12 @@ spec:
   selector:
     matchLabels:
       component: stolon-proxy
-      stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+      stolon-cluster: {{ $.Name }}
   template:
     metadata:
       labels:
         component: stolon-proxy
-        stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+        stolon-cluster: {{ $.Name }}
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "{{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}"

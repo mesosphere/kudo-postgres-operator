@@ -10,10 +10,6 @@ parameters:
   - name: SENTINEL_NODES
     default: 2
 
-  - name: CLUSTER_NAME
-    description: The name of this Postgres Stolon Cluster
-    default: kube-stolon
-
   - name: STOLON_DOCKER_IMAGE
     description: TODO
     default: "${STOLON_DOCKER_IMAGE}"

@@ -9,12 +9,12 @@ spec:
   selector:
     matchLabels:
       component: stolon-keeper
-      stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+      stolon-cluster: {{ $.Name }}
   template:
     metadata:
       labels:
         component: stolon-keeper
-        stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+        stolon-cluster: {{ $.Name }}
         {{ if eq .Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
         kudo.dev/servicemonitor: "true"
         {{ end }}
@@ -126,14 +126,27 @@ spec:
             - name: PG_EXPORTER_DISABLE_SETTINGS_METRICS
               value: "true"
             - name: PG_EXPORTER_WEB_LISTEN_ADDRESS
-              value: {{ $.Params.INTERNAL_PG_EXPORTER_PORT }}
+              value: "0.0.0.0:{{ $.Params.INTERNAL_PG_EXPORTER_PORT }}"
+            - name: PG_EXPORTER_AUTO_DISCOVER_DATABASES
+              value: "true"
+            - name: PG_EXPORTER_EXTEND_QUERY_PATH
+              value: "/queries/extra-queries.yaml"
           ports:
             - containerPort: {{ $.Params.INTERNAL_PG_EXPORTER_PORT }}
+          volumeMounts:
+            - mountPath: /queries
+              name: monitor-queries
         {{ end }}
       volumes:
         - name: credentials
           secret:
             secretName: {{ $.Params.CREDENTIALS_SECRET_NAME }}
+        {{ if eq $.Params.PROMETHEUS_EXPORTER_ENABLED "true" }}
+        - name: monitor-queries
+          configMap:
+            name: {{ $.Name }}-monitor-queries
+            defaultMode: 0755
+        {{ end }}
   # Define your own volumeClaimTemplate. This example uses dynamic PV provisioning with a storage class named "standard" (so it will works by default with minikube)
   # In production you should use your own defined storage-class and configure your persistent volumes (statically or dynamically using a provisioner, see related k8s doc).
   volumeClaimTemplates:

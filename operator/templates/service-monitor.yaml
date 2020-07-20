@@ -10,7 +10,7 @@ spec:
       name: prometheus-exporter-port
       targetPort: {{ $.Params.INTERNAL_STOLON_METRICS_EXPORTER_PORT }}
   selector:
-    stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+    stolon-cluster: {{ $.Name }}
 ---
 apiVersion: v1
 kind: Service
@@ -25,7 +25,7 @@ spec:
       targetPort: {{ $.Params.INTERNAL_PG_EXPORTER_PORT }}
   selector:
     component: stolon-keeper
-    stolon-cluster: {{ $.Params.CLUSTER_NAME }}
+    stolon-cluster: {{ $.Name }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor

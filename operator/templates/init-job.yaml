@@ -16,8 +16,8 @@ spec:
             - bash
             - -c
           args:
-            - stolonctl --cluster-name={{ $.Params.CLUSTER_NAME }} --store-backend=kubernetes --kube-resource-kind=configmap init --yes -f /cluster-spec/cluster-spec.json;
-              while :; do echo "Waiting for service to be ready..."; sleep 3; pg_isready --host postgres-proxy-svc --port {{ $.Params.SQL_PORT }} && break; done;
+            - stolonctl --cluster-name={{ $.Name }} --store-backend=kubernetes --kube-resource-kind=configmap init --yes -f /cluster-spec/cluster-spec.json;
+              while :; do echo "Waiting for service to be ready..."; sleep 3; pg_isready --host {{ $.Name }}-proxy-svc --port {{ $.Params.SQL_PORT }} && break; done;
           volumeMounts:
             - mountPath: /cluster-spec
               name: cluster-spec
